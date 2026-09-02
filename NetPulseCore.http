@@ -1,4 +1,4 @@
-@NetPulseCore_HostAddress = http://localhost:5000
+@NetPulseCore_HostAddress = http://localhost:5055
 
 ### Overview Summary
 GET {{NetPulseCore_HostAddress}}/api/v1/overview

@@ -61,14 +61,14 @@ Klasör içindeki `BASLAT.bat` dosyasına çift tıklayabilir veya terminalde ş
 
 ```bash
 # Projeyi derle ve başlat
-dotnet run -c Release --urls "http://localhost:5000"
+dotnet run -c Release
 ```
 
 ### 2. Canlı Erişim Noktaları
-- 📊 **Web Kontrol Paneli**: [http://localhost:5000](http://localhost:5000)
-- 📖 **Swagger / OpenAPI**: [http://localhost:5000/swagger](http://localhost:5000/swagger)
-- 💓 **Sağlık Durumu**: [http://localhost:5000/api/v1/health](http://localhost:5000/api/v1/health)
-- 📡 **Canlı Telemetri**: [http://localhost:5000/api/v1/telemetry/live](http://localhost:5000/api/v1/telemetry/live)
+- 📊 **Web Kontrol Paneli**: [http://localhost:5055](http://localhost:5055)
+- 📖 **Swagger / OpenAPI**: [http://localhost:5055/swagger](http://localhost:5055/swagger)
+- 💓 **Sağlık Durumu**: [http://localhost:5055/api/v1/health](http://localhost:5055/api/v1/health)
+- 📡 **Canlı Telemetri**: [http://localhost:5055/api/v1/telemetry/live](http://localhost:5055/api/v1/telemetry/live)
 
 ---
 
@@ -97,7 +97,7 @@ dotnet run -c Release --urls "http://localhost:5000"
 docker build -t net-pulse-core .
 
 # Konteyneri başlat
-docker run -d -p 5000:8080 --name netpulse net-pulse-core
+docker run -d -p 5055:8080 --name netpulse net-pulse-core
 ```
 
 ---

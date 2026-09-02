@@ -102,8 +102,13 @@ app.UseStaticFiles();
 // Map REST & SSE API endpoints
 app.MapNetPulseEndpoints();
 
-Console.WriteLine("⚡ NetPulse Core (.NET 8 Enterprise Platform) started successfully.");
-Console.WriteLine("📊 Web Dashboard: http://localhost:5000 / http://localhost:5247");
-Console.WriteLine("📖 Swagger Docs:  http://localhost:5000/swagger");
+// Fallback to index.html for SPA routing
+app.MapFallbackToFile("index.html");
+
+Console.WriteLine("===============================================================");
+Console.WriteLine("⚡ NetPulse Core (.NET 8 Enterprise Platform) is LIVE!");
+Console.WriteLine("📊 Web Dashboard: http://localhost:5055");
+Console.WriteLine("📖 Swagger Docs:  http://localhost:5055/swagger");
+Console.WriteLine("===============================================================");
 
 app.Run();

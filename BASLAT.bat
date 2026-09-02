@@ -16,11 +16,12 @@ if %errorlevel% neq 0 (
 echo.
 echo [2/2] NetPulse Core baslatiliyor...
 echo.
-echo 📊 Web Dashboard: http://localhost:5000 / http://localhost:5247
-echo 📖 OpenAPI / Swagger Docs: http://localhost:5000/swagger
+echo 📊 Web Dashboard: http://localhost:5055
+echo 📖 OpenAPI / Swagger Docs: http://localhost:5055/swagger
 echo.
-echo Tarayicinizda acmak icin URL'leri kullanabilirsiniz.
+echo Tarayicinizda aciliyor...
+start http://localhost:5055
 echo Durdurmak icin Ctrl+C tuslarina basin.
 echo =====================================================================
-dotnet run -c Release --urls "http://localhost:5000"
+dotnet run -c Release --no-build
 pause

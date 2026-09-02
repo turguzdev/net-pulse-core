@@ -3,6 +3,8 @@ bin/
 obj/
 *.db
 *.db-journal
+*.db-wal
+*.db-shm
 *.sqlite
 *.sqlite3
 
@@ -21,6 +23,3 @@ obj/
 ## OS Files
 .DS_Store
 Thumbs.db
-
-*.db-wal
-*.db-shm
