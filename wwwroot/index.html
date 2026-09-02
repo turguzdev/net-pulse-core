@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetPulse Core • .NET 8 Enterprise Telemetry & Mesh Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <header class="app-header">
+        <div class="container header-content">
+            <div class="brand">
+                <div class="brand-logo">
+                    <span class="logo-pulse"></span>
+                    ⚡
+                </div>
+                <div class="brand-meta">
+                    <h1>NetPulse <span class="badge">.NET 8 CORE</span></h1>
+                    <p class="brand-subtitle">High-Performance Asynchronous Microservice Mesh</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="stream-badge active" id="streamIndicator">
+                    <span class="pulse-dot"></span>
+                    <span id="streamStatusText">SSE Stream Live</span>
+                </div>
+                <a href="/swagger" target="_blank" class="btn btn-outline">
+                    <span>📖 OpenAPI / Swagger</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container app-body">
+        <!-- Top Stats Row -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Process CPU Load</span>
+                    <span class="stat-icon">💻</span>
+                </div>
+                <div class="stat-val" id="cpuVal">0.0%</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="cpuBar" style="width: 0%"></div>
+                </div>
+                <span class="stat-sub" id="cpuDetails">Multi-Core Native Engine</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Working Set Memory</span>
+                    <span class="stat-icon">🧠</span>
+                </div>
+                <div class="stat-val" id="memVal">0 MB</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill mem" id="memBar" style="width: 15%"></div>
+                </div>
+                <span class="stat-sub" id="gcDetails">GC Gen 0/1/2 Collections</span>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Active Mesh Nodes</span>
+                    <span class="stat-icon">🌐</span>
+                </div>
+                <div class="stat-val" id="nodesCountVal">0</div>
+                <div class="stat-sub status-green" id="nodesStatus">100% Cluster Health</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Background Job Queue</span>
+                    <span class="stat-icon">⚙️</span>
+                </div>
+                <div class="stat-val" id="jobsCountVal">0</div>
+                <div class="stat-sub" id="uptimeVal">Uptime: 0s</div>
+            </div>
+        </section>
+
+        <!-- Main Workspace 2-Column -->
+        <div class="workspace-grid">
+            <!-- Left Column: Cluster Topology & Node Manager -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h2>Cluster Nodes Topology</h2>
+                        <p class="card-subtitle">Live heartbeat and workload distribution across regions</p>
+                    </div>
+                    <button class="btn btn-primary btn-sm" id="btnOpenNodeModal">+ Add Node</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Node ID</th>
+                                <th>Name</th>
+                                <th>Region</th>
+                                <th>Workload</th>
+                                <th>Load</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="nodesTableBody">
+                            <tr><td colspan="7" class="text-center text-muted">Connecting to mesh...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Right Column: Async Background Channel Jobs -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h2>Async Channel Task Queue</h2>
+                        <p class="card-subtitle">Non-blocking high-throughput worker pipeline (Channel&lt;T&gt;)</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" id="btnDispatchJob">🚀 Dispatch Job</button>
+                </div>
+
+                <div class="jobs-list" id="jobsListContainer">
+                    <div class="empty-state">No active jobs in queue.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hardware & Runtime Environment Diagnostic Panel -->
+        <section class="card diagnostic-card">
+            <div class="card-header">
+                <h2>CLR Runtime & Host Environment</h2>
+                <button class="btn btn-outline btn-sm" id="btnRefreshDiagnostics">↻ Refresh</button>
+            </div>
+            <div class="diag-grid">
+                <div class="diag-item">
+                    <span class="diag-lbl">Operating System</span>
+                    <span class="diag-val" id="diagOs">-</span>
+                </div>
+                <div class="diag-item">
+                    <span class="diag-lbl">CLR Runtime</span>
+                    <span class="diag-val" id="diagFramework">-</span>
+                </div>
+                <div class="diag-item">
+                    <span class="diag-lbl">Host Machine</span>
+                    <span class="diag-val" id="diagMachine">-</span>
+                </div>
+                <div class="diag-item">
+                    <span class="diag-lbl">ThreadPool Available</span>
+                    <span class="diag-val" id="diagThreads">-</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Node Modal -->
+    <div class="modal-overlay" id="nodeModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Register New Cluster Node</h3>
+                <button class="modal-close" id="btnCloseModal">&times;</button>
+            </div>
+            <form id="nodeForm">
+                <div class="form-group">
+                    <label>Node Identifier / Name</label>
+                    <input type="text" id="nodeNameInput" placeholder="e.g. edge-worker-stockholm-01" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Region</label>
+                        <select id="nodeRegionInput">
+                            <option value="eu-central-1">eu-central-1 (Frankfurt)</option>
+                            <option value="us-east-1">us-east-1 (N. Virginia)</option>
+                            <option value="ap-southeast-1">ap-southeast-1 (Singapore)</option>
+                            <option value="sa-east-1">sa-east-1 (São Paulo)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Workload Profile</label>
+                        <select id="nodeWorkloadInput">
+                            <option value="Compute">High-Perf Compute</option>
+                            <option value="AI-Worker">AI Model Inference</option>
+                            <option value="Ingress">API Gateway Ingress</option>
+                            <option value="Storage">Distributed Storage</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="btnCancelModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Announce & Connect</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Job Dispatch Modal -->
+    <div class="modal-overlay" id="jobModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Dispatch Asynchronous Task</h3>
+                <button class="modal-close" id="btnCloseJobModal">&times;</button>
+            </div>
+            <form id="jobForm">
+                <div class="form-group">
+                    <label>Task Title / Description</label>
+                    <input type="text" id="jobTitleInput" placeholder="e.g. Neural Vector Indexing Pipeline" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Job Profile Type</label>
+                        <select id="jobTypeInput">
+                            <option value="DataSync">Distributed DataSync</option>
+                            <option value="ModelInference">AI Model Inference Batch</option>
+                            <option value="TelemetryAudit">Cluster Telemetry Audit</option>
+                            <option value="CacheCompaction">Distributed Cache Compaction</option>
+                            <option value="StressBenchmark">Mesh Throughput Benchmark</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (Seconds)</label>
+                        <input type="number" id="jobDurationInput" value="4" min="1" max="60" required>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="btnCancelJobModal">Cancel</button>
+                    <button type="submit" class="btn btn-secondary">Enqueue Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="container footer-content">
+            <p>⚡ <strong>NetPulse Core</strong> • High-Performance .NET 8 Enterprise Platform</p>
+            <p class="text-muted">Built with C# 12 • ASP.NET Core Minimal APIs • Entity Framework Core SQLite • System.Threading.Channels</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

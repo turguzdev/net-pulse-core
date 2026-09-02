@@ -1,0 +1,43 @@
+@NetPulseCore_HostAddress = http://localhost:5000
+
+### Overview Summary
+GET {{NetPulseCore_HostAddress}}/api/v1/overview
+Accept: application/json
+
+### Health Check
+GET {{NetPulseCore_HostAddress}}/api/v1/health
+Accept: application/json
+
+### Live Telemetry
+GET {{NetPulseCore_HostAddress}}/api/v1/telemetry/live
+Accept: application/json
+
+### List Nodes
+GET {{NetPulseCore_HostAddress}}/api/v1/nodes
+Accept: application/json
+
+### Register New Node
+POST {{NetPulseCore_HostAddress}}/api/v1/nodes
+Content-Type: application/json
+
+{
+  "nodeName": "node-frankfurt-gpu-01",
+  "region": "eu-central-1",
+  "workloadType": "AI-Worker",
+  "cpuCores": 32,
+  "totalMemoryMb": 65536
+}
+
+### Enqueue Background Job
+POST {{NetPulseCore_HostAddress}}/api/v1/jobs
+Content-Type: application/json
+
+{
+  "title": "Global Telemetry Compaction",
+  "jobType": "TelemetryAudit",
+  "estimatedDurationSec": 4
+}
+
+### List Jobs
+GET {{NetPulseCore_HostAddress}}/api/v1/jobs
+Accept: application/json
